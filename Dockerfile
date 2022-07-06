@@ -44,3 +44,7 @@ RUN curl -Lo ./tflint.zip \
         && unzip tflint.zip \
         && chmod +x tflint \
         && mv tflint /usr/bin
+
+# Add terraformrc file
+ADD terraformrc .
+RUN mv terraformrc $HOME/.terraformrc
