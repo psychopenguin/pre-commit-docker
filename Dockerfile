@@ -1,16 +1,16 @@
-FROM python:3.9.10-alpine
+FROM python:3.10.5-alpine
 
 # Install basic packages
 # hadolint ignore=DL3018,DL3059
 RUN apk add \
         --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main \
         --no-cache \
-        git \
-        curl \
-        gcc \
-        libc-dev \
-        bash \
-        perl
+        git=2.37.1-r0 \
+        curl=7.84.0-r0  \
+        gcc=11.2.1_git20220219-r3 \
+        libc-dev=0.7.2-r3 \
+        bash=5.1.16-r2 \
+        perl=5.36.0-r0
 
 # Install pre-commit
 # hadolint ignore=DL3059
@@ -22,10 +22,12 @@ RUN pip install \
 
 # Install terraform
 # hadolint ignore=DL3018,DL3059
-RUN apk add \
-        --repository=https://dl-cdn.alpinelinux.org/alpine/edge/community \
-        --no-cache \
-        terraform
+#
+RUN curl -Lo ./terraform.zip \
+        "https://releases.hashicorp.com/terraform/1.2.5/terraform_1.2.5_linux_amd64.zip" \
+        && unzip terraform.zip \
+        && chmod +x terraform \
+        && mv terraform /usr/bin
 
 # Install Terraform Docs
 RUN curl -Lo ./terraform-docs.tar.gz \
