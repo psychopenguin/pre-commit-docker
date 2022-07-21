@@ -1,0 +1,27 @@
+name: Pre-commit
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*.*.*' ]
+  pull_request:
+    branches: [ main ]
+
+
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/psychopenguin/pre-commit-docker:v0.2.3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Fix permissions on git repository
+        run: git config --global --add safe.directory $(pwd)
+      - name: Run Terraform Init
+        run: terraform init
+      - name: Install pre-commit hooks
+        run: pre-commit install --install-hooks
+      - name: Run pre-commit validation
+        run: pre-commit run --all-files
