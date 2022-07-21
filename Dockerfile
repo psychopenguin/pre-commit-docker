@@ -49,3 +49,9 @@ RUN curl -Lo ./tflint.zip \
         && unzip tflint.zip \
         && chmod +x tflint \
         && mv tflint /usr/bin
+
+# Install hadolint
+RUN curl -Lo ./hadolint \
+        "https://github.com/hadolint/hadolint/releases/download/v2.10.0/hadolint-Linux-x86_64" \
+        && chmod +x hadolint \
+        && mv hadolint /usr/bin
