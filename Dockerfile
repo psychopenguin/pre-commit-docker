@@ -5,12 +5,12 @@ FROM python:3.10.5-alpine
 RUN apk add \
         --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main \
         --no-cache \
-        git=2.37.1-r0 \
-        curl=7.84.0-r0  \
-        gcc=11.2.1_git20220219-r3 \
-        libc-dev=0.7.2-r3 \
-        bash=5.1.16-r2 \
-        perl=5.36.0-r0
+        git \
+        curl  \
+        gcc \
+        libc-dev \
+        bash \
+        perl
 
 # Install pre-commit
 # hadolint ignore=DL3059
