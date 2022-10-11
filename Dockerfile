@@ -1,4 +1,4 @@
-FROM python:3.10.7-alpine
+FROM python:3.10.5-alpine
 
 # Install basic packages
 # hadolint ignore=DL3018,DL3059
@@ -24,7 +24,7 @@ RUN pip install \
 # hadolint ignore=DL3018,DL3059
 #
 RUN curl -Lo ./terraform.zip \
-        "https://releases.hashicorp.com/terraform/1.3.2/terraform_1.3.2_linux_amd64.zip" \
+        "https://releases.hashicorp.com/terraform/1.2.5/terraform_1.2.5_linux_amd64.zip" \
         && unzip terraform.zip \
         && chmod +x terraform \
         && mv terraform /usr/bin
@@ -38,14 +38,14 @@ RUN curl -Lo ./terraform-docs.tar.gz \
 
 # Install TFSec
 RUN curl -Lo ./tfsec.tar.gz \
-        "https://github.com/aquasecurity/tfsec/releases/download/v1.28.0/tfsec_1.28.0_$(uname)_amd64.tar.gz" \
+        "https://github.com/aquasecurity/tfsec/releases/download/v1.26.0/tfsec_1.26.0_$(uname)_amd64.tar.gz" \
         && tar -xzf tfsec.tar.gz \
         && chmod +x tfsec \
         && mv tfsec /usr/bin
 
 # Install tflint
 RUN curl -Lo ./tflint.zip \
-        "https://github.com/terraform-linters/tflint/releases/download/v0.41.0/tflint_$(uname)_amd64.zip" \
+        "https://github.com/terraform-linters/tflint/releases/download/v0.38.1/tflint_$(uname)_amd64.zip" \
         && unzip tflint.zip \
         && chmod +x tflint \
         && mv tflint /usr/bin
