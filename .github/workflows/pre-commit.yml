@@ -13,7 +13,7 @@ jobs:
   validate:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/psychopenguin/pre-commit-docker:v0.2.3
+      image: ghcr.io/movingimage-evp/pre-commit-docker:v0.2.4
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2

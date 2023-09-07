@@ -1,4 +1,4 @@
-FROM python:3.10.12-alpine
+FROM python:3.10.13-alpine
 
 # Install basic packages
 # hadolint ignore=DL3018,DL3059
@@ -16,15 +16,15 @@ RUN apk add \
 # hadolint ignore=DL3059
 RUN pip install \
         --no-cache-dir \
-        pre-commit==2.17.0 \
-        ruamel.yaml==0.17.21 \
+        pre-commit==3.4.0 \
+        ruamel.yaml==0.17.32 \
         tomli==2.0.1
 
 # Install terraform
 # hadolint ignore=DL3018,DL3059
 #
-RUN curl -Lo ./terraform.zip \
-        "https://releases.hashicorp.com/terraform/1.5.2/terraform_1.5.2_linux_amd64.zip" \
+RUN LATEST_TERRAFORM=`curl -sL https://releases.hashicorp.com/terraform/index.json | jq -r '.versions[].builds[].url' | sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n | egrep -v 'rc|beta|alpha' | egrep 'linux.*amd64' | grep -v terraform_0 | tail -1` \ 
+        && curl -Lo ./terraform.zip ${LATEST_TERRAFORM} \
         && unzip terraform.zip \
         && chmod +x terraform \
         && mv terraform /usr/bin
@@ -45,7 +45,7 @@ RUN curl -Lo ./tfsec.tar.gz \
 
 # Install tflint
 RUN curl -Lo ./tflint.zip \
-        "https://github.com/terraform-linters/tflint/releases/download/v0.47.0/tflint_$(uname)_amd64.zip" \
+        "https://github.com/terraform-linters/tflint/releases/download/v0.48.0/tflint_$(uname)_amd64.zip" \
         && unzip tflint.zip \
         && chmod +x tflint \
         && mv tflint /usr/bin
