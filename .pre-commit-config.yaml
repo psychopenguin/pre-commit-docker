@@ -8,6 +8,6 @@ repos:
       - id: check-yaml
       - id: check-added-large-files
   - repo: https://github.com/hadolint/hadolint
-    rev: v2.12.0
+    rev: v2.12.1-beta
     hooks:
       - id: hadolint

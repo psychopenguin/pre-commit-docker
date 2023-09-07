@@ -23,8 +23,9 @@ RUN pip install \
 # Install terraform
 # hadolint ignore=DL3018,DL3059
 #
-RUN LATEST_TERRAFORM=`curl -sL https://releases.hashicorp.com/terraform/index.json | jq -r '.versions[].builds[].url' | sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n | egrep -v 'rc|beta|alpha' | egrep 'linux.*amd64' | grep -v terraform_0 | tail -1` \ 
-        && curl -Lo ./terraform.zip ${LATEST_TERRAFORM} \
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
+RUN LATEST_TERRAFORM=`curl -sL "https://releases.hashicorp.com/terraform/index.json" | jq -r ".versions[].builds[].url" | sort -t. -k 1,1n -k 2,2n -k 3,3n -k 4,4n | grep -v "rc|beta|alpha" | grep -E "linux.*amd64" | grep -v terraform_0 | tail -1` \
+        && curl -Lo ./terraform.zip "${LATEST_TERRAFORM}" \
         && unzip terraform.zip \
         && chmod +x terraform \
         && mv terraform /usr/bin
